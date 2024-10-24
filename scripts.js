@@ -11,14 +11,7 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
   const entries = new FormData(event.target);
   const { dividend, divider } = Object.fromEntries(entries);
-  /*
-  if (dividend === '' || divider === '') { 
-    result.innerText = 'Division not performed. Both values are required in inputs. Try again'; 
-  } else {
-    result.innerText = dividend / divider;
-  }
-  */
-
+ 
   let errors = false;
 
   try {
@@ -29,10 +22,14 @@ form.addEventListener("submit", (event) => {
         break;
       case !/^\d+$/.test(dividend): // Check if dividend is numeric
         result.innerText = 'Division not performed. Dividend must be a valid whole number. Try again';
+        crash();
+        console.error(new Error("Invalid parameter entered!"));
         errors = true;
         break;
       case !/^\d+$/.test(divider): // Check if divider is numeric
         result.innerText = 'Division not performed. Divider must be a valid whole number. Try again';
+        crash();
+        console.error(new Error("Invalid parameter entered!"));
         errors = true;
         break;
       case divider === '':
