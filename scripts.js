@@ -1,6 +1,11 @@
 const form = document.querySelector("[data-form]");
 const result = document.querySelector("[data-result]");
 
+function crash(){
+  const body = document.getElementById('body');
+  body.innerHTML ='<h1>Something critical went wrong. Please reload the page</h1>'
+}
+
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -22,21 +27,29 @@ form.addEventListener("submit", (event) => {
         result.innerText = 'Division not performed. Both values are required in inputs. Try again'; 
         errors = true;
         break;
+      case !/^\d+$/.test(dividend): // Check if dividend is numeric
+        result.innerText = 'Division not performed. Dividend must be a valid whole number. Try again';
+        errors = true;
+        break;
+      case !/^\d+$/.test(divider): // Check if divider is numeric
+        result.innerText = 'Division not performed. Divider must be a valid whole number. Try again';
+        errors = true;
+        break;
       case divider === '':
         result.innerText = 'Division not performed. Both values are required in inputs. Try again'; 
         errors = true;
         break;
       case divider === '0':
-        result.innerText = 'Division not performed. Invalid number provided. Try again';
+        result.innerText = 'Division not performed. Invalid whole number provided. Try again';
         errors = true;
-        console.error(new Error("The string is completely empty."));
+        console.error(new Error("The result is undefined as the divider is 0"));
       default:
         console.log("The Fields are filled. Entries are valid.");
     }
   } finally{
   
     if (!errors) {
-      result.innerText = dividend / divider;
+      result.innerText = Math.floor(dividend / divider);
     }
   }
 });
